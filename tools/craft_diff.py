@@ -4,7 +4,7 @@
 Every scenario builds its input folder twice (once per side), runs the same command on both and compares exit code, stdout and stderr (paths
 normalised) and, for scenarios that write, the files left behind. Nothing is written in the reference clone: sync_core runs from a copy.
 
-  ORACLE_TOOLKIT   the reference clone (default C:\\Users\\someone\\work\\reference\\claude-dev-toolkit-old)
+  ORACLE_TOOLKIT   the reference clone (default: the sibling folder claude-dev-toolkit)
   CRAFT            the binary under test (default <repo>/target/debug/craft.exe, or $CARGO_TARGET_DIR/debug/craft.exe)
 
 Usage: python tools/craft_diff.py [--filter TEXT] [--verbose]
@@ -18,7 +18,7 @@ import tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(HERE)
-ORACLE = os.environ.get("ORACLE_TOOLKIT", r"C:\Users\someone\work\reference\claude-dev-toolkit-old")
+ORACLE = os.environ.get("ORACLE_TOOLKIT", os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "claude-dev-toolkit"))
 SCRIPTS = os.path.join(ORACLE, "plugin", "shared", "scripts")
 FIXTURE = os.path.join(ORACLE, "plugin", "shared", "tests", "network_contract.json")
 TARGET = os.environ.get("CARGO_TARGET_DIR") or os.path.join(REPO, "target")
