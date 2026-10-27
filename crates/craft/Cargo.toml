@@ -1,4 +1,5 @@
 [package]
+publish = false
 name = "craft"
 description = "The claude-craft-kit toolbox: testenv, verify, regression_diff, map_reuse, classify_structure, sync_core"
 version.workspace = true
