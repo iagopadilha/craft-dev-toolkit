@@ -1,0 +1,15 @@
+{
+  "name": "claude-craft-kit",
+  "owner": {
+    "name": "Iago Boardman Padilha"
+  },
+  "description": "Generic development standards for Claude Code, packaged as skills: backend, frontend, Git and GitHub, spec-driven planning and end-to-end flow validation, plus the craft binary. Your team's own rules plug in through standards slots declared in each project's CLAUDE.md.",
+  "plugins": [
+    {
+      "name": "claude-craft-kit",
+      "source": "./plugin",
+      "description": "Backend, frontend, GitHub, spec-driven planning, flow validation and Playwright skills, free of any company's names, with the craft binary. Company rules plug in through standards slots bound in the project's CLAUDE.md.",
+      "version": "0.3.1"
+    }
+  ]
+}

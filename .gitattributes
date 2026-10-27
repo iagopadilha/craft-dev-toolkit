@@ -33,3 +33,8 @@ Cargo.lock -diff
 fixtures/** linguist-generated
 cases/** linguist-generated
 docs/media/** linguist-documentation
+
+# Files Claude Code reads as instructions must stay LF
+plugin/skills/*/SKILL.md text eol=lf
+plugin/skills/**/*.md text eol=lf
+plugin/shared/** text eol=lf

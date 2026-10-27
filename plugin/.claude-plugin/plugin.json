@@ -1,0 +1,20 @@
+{
+  "name": "claude-craft-kit",
+  "version": "0.3.1",
+  "description": "Generic development standards for Claude Code, packaged as skills (backend .NET and NestJS, frontend React and Vite, Git and GitHub, spec-driven planning, flow validation, Playwright) with a small binary behind them (craft). Company rules plug in through standards slots that each project binds in its CLAUDE.md.",
+  "author": {
+    "name": "Iago Boardman Padilha"
+  },
+  "homepage": "https://github.com/iagopadilha/claude-craft-kit",
+  "repository": "https://github.com/iagopadilha/claude-craft-kit",
+  "license": "MIT",
+  "keywords": [
+    "standards",
+    "backend",
+    "frontend",
+    "github",
+    "spec-driven",
+    "playwright",
+    "skills"
+  ]
+}

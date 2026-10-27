@@ -1,0 +1,8 @@
+# Copy to .specs/project/.env.test (or run `craft testenv init --project <root>`). That file is git-ignored.
+# Names only here, fake values. Real values go ONLY in .specs/project/.env.test.
+# Lists use `;`, aligned by position.
+TEST_USER_EMAILS=user1@example.com;admin@example.com
+TEST_USER_PASSWORDS=change-me-1;change-me-2
+TEST_USER_ROLES=customer;admin
+ADMIN_TOKEN=FILL IN
+WEBHOOK_SECRET=FILL IN

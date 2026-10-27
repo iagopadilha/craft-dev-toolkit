@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "allow": [
+    "api.example.com GET,POST,PUT,DELETE cred",
+    "auth.example.com/auth POST cred",
+    "cdn.example.com GET"
+  ]
+}
