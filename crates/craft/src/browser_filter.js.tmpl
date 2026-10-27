@@ -1,0 +1,41 @@
+async page => {
+  const policy = @@POLICY@@;
+  const defaults = { 'http:': 80, 'https:': 443, 'ws:': 80, 'wss:': 443, 'ftp:': 21 };
+  const offline = ['data:', 'blob:', 'about:'];
+  const decode = text => text.replace(/(?:%[0-9a-fA-F]{2})+/g, run => { try { return decodeURIComponent(run); } catch (error) { return run; } });
+  const normalise = raw => {
+    const parts = [];
+    for (const segment of decode(raw).replace(/\\/g, '/').split('/')) {
+      if (segment === '' || segment === '.') continue;
+      if (segment === '..') { parts.pop(); continue; }
+      parts.push(segment);
+    }
+    return parts.length ? '/' + parts.join('/') : '';
+  };
+  const hostMatches = (pattern, host) => {
+    if (!pattern.startsWith('*.')) return pattern === host;
+    const suffix = pattern.slice(1);
+    return host.endsWith(suffix) && host.length > suffix.length && host.slice(0, host.length - suffix.length).split('.').every(Boolean);
+  };
+  const pathMatches = (prefix, path) => !prefix || path === prefix || path.startsWith(prefix + '/');
+  const allowed = (method, rawUrl) => {
+    const url = new URL(rawUrl);
+    if (offline.includes(url.protocol)) return true;
+    let host = url.hostname.toLowerCase().replace(/^\[|\]$/g, '');
+    if (host.endsWith('.') && !host.endsWith('..')) host = host.slice(0, -1);
+    if (!host) return false;
+    const port = url.port ? Number(url.port) : defaults[url.protocol];
+    if (policy.deny.some(pattern => hostMatches(pattern, host))) return false;
+    if (policy.local.some(pattern => hostMatches(pattern, host))) return true;
+    if (policy.broken) return false;
+    const path = normalise(url.pathname);
+    return policy.allow.some(entry => hostMatches(entry.host, host) && (entry.port === null || entry.port === port) &&
+      pathMatches(entry.path, path) && (entry.methods.includes('*') || entry.methods.includes(method)));
+  };
+  await page.context().route('**/*', async route => {
+    const request = route.request();
+    let pass = false;
+    try { pass = allowed(request.method().toUpperCase(), request.url()); } catch (error) { pass = false; }
+    if (pass) await route.continue(); else await route.abort('blockedbyclient');
+  });
+}

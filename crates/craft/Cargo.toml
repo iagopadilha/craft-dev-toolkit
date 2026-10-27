@@ -1,0 +1,23 @@
+[package]
+name = "craft"
+description = "The claude-craft-kit toolbox: testenv, verify, regression_diff, map_reuse, classify_structure, sync_core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[[bin]]
+name = "craft"
+path = "src/main.rs"
+
+[dependencies]
+pycompat = { path = "../pycompat" }
+egress-policy = { path = "../egress-policy" }
+serde_json = { workspace = true }
+regex = { workspace = true }
+time = { version = "0.3", features = ["formatting", "local-offset", "macros"] }
+tempfile = { workspace = true }
+
+[lints]
+workspace = true
