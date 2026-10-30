@@ -82,9 +82,9 @@ What MUST be done before this task can start?
 
 Group tasks into phases. Identify what can run in parallel.
 
-**DEFAULT: split tasks into parallel tracks whenever the shape allows it.** Do not wait to be asked — a `tasks.md` without an explicit parallel plan is incomplete.
+**DEFAULT: describe the parallel tracks the shape allows, but do not assume they will run in parallel.** Anthropic's guidance ("When to fold subagents into your main agent loop", 2026-10-22) is one executor walking the tasks in order unless parallel work has a measured payoff. So `tasks.md` always states the tracks it *could* split into (an explicit plan is still part of a complete `tasks.md`), and the orchestrator's plan decides (`split=none|group|task`): the default is ONE executor for the whole list, in order; a track becomes its own executor only when the plan says so.
 
-Split into independent tracks when ANY of these hold:
+The shape allows independent tracks when ANY of these hold:
 
 - The work spans **multiple repositories / packages / services** → one track per repo (they share no files: zero coordination needed)
 - The work repeats the **same recipe over N targets** (N ≥ 3) → one track per target

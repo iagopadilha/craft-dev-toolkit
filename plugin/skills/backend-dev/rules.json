@@ -1,0 +1,15 @@
+{
+  "skill": "backend-dev",
+  "version": 1,
+  "note": "check=deterministic rules run in code (craft standards check, no model) on NEW code only; check=llm rules are judged by the quality-gate agent. Keep deterministic rules conservative: a false FAIL costs a resend.",
+  "rules": [
+    {"id": "BE-FILE-SIZE", "check": "deterministic", "kind": "max-file-lines", "max": 1500, "globs": ["*.cs", "*.ts"], "text": "a source file must not cross 1500 lines; split into the right layer"},
+    {"id": "BE-NO-ABBREV-TYPE", "check": "deterministic", "kind": "forbid-regex", "pattern": "\\b(class|interface)\\s+\\w*(Svc|Mgr|Repo)\\b", "globs": ["*.cs", "*.ts"], "text": "no abbreviations in type names (Repository, not Repo; Service, not Svc; Manager, not Mgr)"},
+    {"id": "BE-NO-CONSOLE", "check": "deterministic", "kind": "forbid-regex", "pattern": "\\bconsole\\.(log|debug|info)\\(", "globs": ["*.ts"], "text": "use the injected logger with structured fields, not console"},
+    {"id": "BE-DESCRIPTIVE-NAMES", "check": "llm", "text": "classes, methods, parameters and private fields have descriptive names that say what they do and on what; no bare verbs, no abbreviations"},
+    {"id": "BE-SRP", "check": "llm", "text": "a class or method does one thing; a service over about 150 lines or mixing fetch, map and save is split (fetch, build, save)"},
+    {"id": "BE-LAYERS", "check": "llm", "text": "business rules live in the domain/service layer, not in controllers or repositories; layers depend in one direction"},
+    {"id": "BE-REUSE", "check": "llm", "text": "reuse an existing method, class or helper listed in the Reuse map before creating a new one"},
+    {"id": "BE-LOGS", "check": "llm", "text": "logs are structured (message template plus fields), at the right level, with no secrets or personal data"}
+  ]
+}

@@ -6,6 +6,7 @@ mod classify_structure;
 mod map_reuse;
 mod network;
 mod regression_diff;
+mod standards;
 mod sync_core;
 mod testenv;
 mod text;
@@ -18,6 +19,7 @@ Usage: craft <tool> [arguments]
 Tools:
   testenv             test credentials: the project's .env.test, machine sources, network list, exec with redaction
   verify              detects and runs typecheck, lint, build and test; prints PASS, FAIL or UNVERIFIED
+  standards           `standards check`: the deterministic rules of the skills (rules.json) on the changed files
   regression_diff     compares two JSON snapshots (baseline x new) after normalising volatile data
   map_reuse           prints a DRAFT of the 'Reuse map' section of a project's CLAUDE.md
   classify_structure  classifies a project's structure as STANDARD or LEGACY and writes the Conformance section
@@ -41,6 +43,7 @@ fn run(argv: &[String]) -> i32 {
     match tool.as_str() {
         "testenv" => testenv::main(rest),
         "verify" => verify::main(rest),
+        "standards" => standards::main(rest),
         "regression_diff" | "regression-diff" => regression_diff::main(rest),
         "map_reuse" | "map-reuse" => map_reuse::main(rest),
         "classify_structure" | "classify-structure" => classify_structure::main(rest),

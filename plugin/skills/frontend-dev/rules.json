@@ -1,0 +1,15 @@
+{
+  "skill": "frontend-dev",
+  "version": 1,
+  "note": "check=deterministic rules run in code (craft standards check, no model) on NEW code only; check=llm rules are judged by the quality-gate agent. Keep deterministic rules conservative: a false FAIL costs a resend.",
+  "rules": [
+    {"id": "FE-FILE-SIZE", "check": "deterministic", "kind": "max-file-lines", "max": 1500, "globs": ["*.ts", "*.tsx", "*.js", "*.jsx"], "text": "a source file must not cross 1500 lines; split into components, hooks or services"},
+    {"id": "FE-NO-ANY", "check": "deterministic", "kind": "forbid-regex", "pattern": "(:|<|\\bas)\\s*any\\b", "globs": ["*.ts", "*.tsx"], "text": "no `any`: create the right type (use `unknown` in catch)"},
+    {"id": "FE-NO-CONSOLE", "check": "deterministic", "kind": "forbid-regex", "pattern": "\\bconsole\\.(log|debug)\\(", "globs": ["*.ts", "*.tsx", "*.js", "*.jsx"], "text": "remove console.log/debug before delivery"},
+    {"id": "FE-COMPONENT-SIZE", "check": "llm", "text": "a component or hook stays near 150 lines and has one subject; well above that, extract subcomponents or sub-hooks"},
+    {"id": "FE-DESCRIPTIVE-NAMES", "check": "llm", "text": "components, hooks, props and handlers have descriptive names; no abbreviations or generic names (data, handler, temp)"},
+    {"id": "FE-PATTERNS", "check": "llm", "text": "queries, mutations, forms and toasts follow the project's pattern (TanStack Query, shadcn/ui, services layer), not a new ad hoc way"},
+    {"id": "FE-REUSE", "check": "llm", "text": "reuse an existing hook, component or util from the Reuse map before creating a new one"},
+    {"id": "FE-STYLE-GUIDE", "check": "llm", "text": "anything visible follows the project's style guide or design system (colors, typography, spacing, dialogs)"}
+  ]
+}
