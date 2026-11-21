@@ -26,7 +26,7 @@ Conformance: STANDARD|LEGACY   (do not fill by hand: `"${CLAUDE_PLUGIN_ROOT}/bin
 
 ## How to run and verify
 - Build/typecheck/lint/test: `"${CLAUDE_PLUGIN_ROOT}/bin/craft.exe" verify` (or: <project commands>)
-- Run locally: .NET with `--launch-profile https` (from `launchSettings.json`), https first, http only if it does not answer; the front end with the scripts of its `package.json`. Do not hand-write a `dotnet run` line without the https profile. (When an orchestrator such as Claude Maestro manages the repo, it writes this as a generated `How to run` block between `RUN:BEGIN` and `RUN:END`.)
+- Run locally: .NET with `--launch-profile https` (from `launchSettings.json`), https first, http only if it does not answer; the front end with the scripts of its `package.json`. Do not hand-write a `dotnet run` line without the https profile. (When an orchestrator such as Rolo Loop manages the repo, it writes this as a generated `How to run` block between `RUN:BEGIN` and `RUN:END`.)
 
 ## Reuse map (read BEFORE creating a method, function, hook, component or type)
 Look here; if you found it, **reuse or generalize**, do not create a twin. Created something reusable? Add the line.
@@ -57,5 +57,5 @@ prose: it is read line by line, and any line starting with `#` ends it. A tool t
 
 **How the skill uses it:** `backend-dev` and `frontend-dev` (N1) read the "Reuse map" section before naming or
 creating; then they confirm with Grep in the code (the map may be stale). Project without the file: the skill offers to generate the
-draft with `map_reuse.py`. Owner of the file: the main agent (when an orchestrator such as Claude Maestro runs the
+draft with `map_reuse.py`. Owner of the file: the main agent (when an orchestrator such as Rolo Loop runs the
 project, only the orchestrator; a subagent suggests a line in `NOTES`).

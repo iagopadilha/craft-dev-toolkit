@@ -4,7 +4,7 @@
 edit the source file and run the script. -->
 
 Each skill works on its own; the other skills mentioned here are optional ("if present, use it"). Nothing below requires an external tool.
-Script commands use `${CLAUDE_PLUGIN_ROOT}`: if it is empty or not expanded, use the `TOOLKIT:` path given in the prompt, or locate this plugin's folder (`~/.claude/plugins/cache/**/claude-craft-kit/*/`).
+Script commands use `${CLAUDE_PLUGIN_ROOT}`: if it is empty or not expanded, use the `TOOLKIT:` path given in the prompt, or locate this plugin's folder (`~/.claude/plugins/cache/**/craft-dev-toolkit/*/` (older installs: `**/claude-craft-kit/*/`)).
 
 ### N0. Project conformance and scope (read before anything else)
 What the agent may do depends on whether the project follows the new standard or is legacy. This lives in the project `CLAUDE.md`, section `Conformance:`.
@@ -12,7 +12,7 @@ What the agent may do depends on whether the project follows the new standard or
 2. **If the section is missing (or there is no `CLAUDE.md`) and you are about to EDIT files, ask once** before planning or editing; for read-only questions and explanations proceed without asking. Explain why: "in a LEGACY project I only make minimal edits to old files, because without tests refactoring there causes silent regressions; in a STANDARD project I may refactor the class I touch". Run `"${CLAUDE_PLUGIN_ROOT}/bin/craft.exe" classify_structure <root>`, show the evidence and the suggestion, ask "is the project already on the new standard, or is it legacy?" and only then record it with `--write STANDARD|LEGACY`. The user decides, never the script.
 3. **STANDARD** (back Api/Data/Domain; front pages/components): new code follows the standard; a file the feature touches may be edited and **only the touched class/file** is refactored to the standard, with regression offered. Nothing beyond that.
 4. **LEGACY**: new code **follows the pattern the project already has** (no new architecture layer or folder). Old files get a **minimal edit** (only the necessary lines, no rename, split or reformat of the rest). The refactor that was skipped becomes a "Point of attention" for the user to decide. Unique naming (N1) and verification (N4) still apply.
-5. **Scope (always, in both):** only the feature's `PATHS` and only code in the repo. A new file may be created if it stays in scope; a large deviation (another area, another layer, another service) = stop and ask. Do not touch the database, PROD, the pipeline (CI files, k8s) or servers. When an orchestrator such as Claude Maestro runs you, only what the spec listed in PATHS: anything else is `NEEDS_CONFIRM`, and its guard hook blocks it.
+5. **Scope (always, in both):** only the feature's `PATHS` and only code in the repo. A new file may be created if it stays in scope; a large deviation (another area, another layer, another service) = stop and ask. Do not touch the database, PROD, the pipeline (CI files, k8s) or servers. When an orchestrator such as Rolo Loop runs you, only what the spec listed in PATHS: anything else is `NEEDS_CONFIRM`, and its guard hook blocks it.
 
 ### N1. One unique name per thing
 - Before naming a method, function, variable, class, hook, component, type or file, **search the repo for the name** (Grep). Same name with another meaning: the new one gets another name. Same meaning: reuse what exists, do not create a twin.

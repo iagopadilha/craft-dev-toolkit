@@ -75,7 +75,7 @@ If the user asks to delete a protected branch:
 
 ### With an orchestrator
 
-When an orchestrator (for example claude-maestro) drives the work, it commits once per task on the feature branch, never on a protected branch, and pushes and opens the PR once, at the end, through its own delivery step. The confirmation rules above still hold: an orchestrator that is about to touch a protected branch stops and asks the user instead of confirming for them.
+When an orchestrator (for example Rolo Loop) drives the work, it commits once per task on the feature branch, never on a protected branch, and pushes and opens the PR once, at the end, through its own delivery step. The confirmation rules above still hold: an orchestrator that is about to touch a protected branch stops and asks the user instead of confirming for them.
 
 ### What is allowed on protected branches
 

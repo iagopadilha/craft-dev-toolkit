@@ -1,6 +1,6 @@
-# Contributing to claude-craft-kit
+# Contributing to Craft Dev Toolkit
 
-Thanks for helping. This repository holds the claude-craft-kit plugin (skills, shared rules, templates) and the `craft` binary (testenv, verify, regression_diff, map_reuse, classify_structure, sync_core).
+Thanks for helping. This repository holds the Craft Dev Toolkit plugin (skills, shared rules, templates) and the `craft` binary (testenv, verify, regression_diff, map_reuse, classify_structure, sync_core).
 
 ## Ground rules
 

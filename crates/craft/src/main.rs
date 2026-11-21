@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-//! `craft`: the claude-craft-kit toolbox. One binary, one subcommand per former script (same names, flags, output and exit codes).
+//! `craft`: the Craft Dev Toolkit toolbox. One binary, one subcommand per former script (same names, flags, output and exit codes).
 
 mod args;
 mod classify_structure;
@@ -12,7 +12,7 @@ mod testenv;
 mod text;
 mod verify;
 
-const USAGE: &str = "craft: the claude-craft-kit toolbox
+const USAGE: &str = "craft: the Craft Dev Toolkit toolbox
 
 Usage: craft <tool> [arguments]
 

@@ -1,6 +1,6 @@
 # Third-party material
 
-claude-craft-kit is MIT licensed (see `LICENSE`). Two skills are based on third-party work and keep their own licences. Everything else in the repository is original.
+Craft Dev Toolkit is MIT licensed (see `LICENSE`). Two skills are based on third-party work and keep their own licences. Everything else in the repository is original.
 
 ## `tlc-spec-driven` (skill folder `plugin/skills/tlc-spec-driven/`)
 

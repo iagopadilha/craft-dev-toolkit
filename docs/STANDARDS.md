@@ -28,7 +28,7 @@ observability: acme-grafana
 
 ## How the section is parsed
 
-This is what Claude Maestro's standards service does, and the generic skills read the section the same way. Write the section to fit it:
+This is what Rolo Loop's standards service does, and the generic skills read the section the same way. Write the section to fit it:
 
 - The heading is `## Standards` (level 2, any letter case, nothing after it). A heading inside a code fence does not count.
 - **A line starting with `#` followed by a space ends the section** (any heading level). Do not put a `# comment` line inside it.
@@ -37,7 +37,7 @@ This is what Claude Maestro's standards service does, and the generic skills rea
 - **A duplicate slot: the last line wins.**
 - **The plugin prefix is dropped when resolving**: `acme:acme-git-standards` is looked up as `acme-git-standards`, so the prefix does not disambiguate two plugins in that tool.
 - A line that is not `slot: value`, an unknown slot, an empty value or an invalid value is ignored and reported as a note, never an error.
-- **Tools may rewrite the section** (Maestro's installer does): it keeps the rest of the file but replaces the section, so comments inside it are lost.
+- **Tools may rewrite the section** (Rolo Loop's installer does): it keeps the rest of the file but replaces the section, so comments inside it are lost.
 
 ## Value syntax
 
@@ -48,7 +48,7 @@ A value is a skill name. It matches:
 ```
 
 - A bare name: `acme-git-standards`.
-- A plugin-qualified name: `acme:acme-git-standards` (plugin `acme`, skill `acme-git-standards`). Claude Maestro drops the prefix when it resolves the skill, so it cannot tell apart two plugins' skills with the same name: keep your skill names unique.
+- A plugin-qualified name: `acme:acme-git-standards` (plugin `acme`, skill `acme-git-standards`). Rolo Loop drops the prefix when it resolves the skill, so it cannot tell apart two plugins' skills with the same name: keep your skill names unique.
 
 Anything else (spaces, paths, several skills in one line) is not a valid value. One slot binds one skill: if the company wants several rules, they belong in that one skill, which can point to its own references.
 
@@ -60,7 +60,7 @@ Anything else (spaces, paths, several skills in one line) is not a valid value. 
 | `backend` | base URLs, mandatory libraries, real examples, backend rules that win over the generic ones | `backend-dev` |
 | `frontend` | the design system: typography, colors, components, ready-made code models | `frontend-dev` |
 | `app-map` | which app does what, who calls whom, URLs, local ports and folders | `backend-dev`, `frontend-dev`, `flow-validator` |
-| `observability` | where to read the logs and metrics of the running apps | `flow-validator`; an orchestrator's planning and spec agents, such as Claude Maestro's |
+| `observability` | where to read the logs and metrics of the running apps | `flow-validator`; an orchestrator's planning and spec agents, such as Rolo Loop's |
 
 How each slot is used, in one line:
 
@@ -132,4 +132,4 @@ With this, the `github` skill loads `acme-git-standards` before working, uses Ac
 
 ## Checking a binding
 
-If a slot's skill is not found, the generic skill says so in one line and continues with its defaults. A bound skill is **not installed** when the Skill tool does not find it by that name: check the installed plugins (`/plugin`), the spelling of the value and, for a plugin skill, that the plugin is enabled. A tool that runs the skills for you, such as Claude Maestro, can also report a bound skill that does not resolve.
+If a slot's skill is not found, the generic skill says so in one line and continues with its defaults. A bound skill is **not installed** when the Skill tool does not find it by that name: check the installed plugins (`/plugin`), the spelling of the value and, for a plugin skill, that the plugin is enabled. A tool that runs the skills for you, such as Rolo Loop, can also report a bound skill that does not resolve.

@@ -93,7 +93,7 @@ Capture in-progress thoughts and action items that don't fit in active tasks.
 Separate from STATE.md. STATE.md is the "now" (decisions, blockers, lessons, todos). RULES.md is the **permanent limits of the application**: it never expires, is not tied to a phase or feature, and is read at the start of every session, after context compaction and in new conversations (the project `CLAUDE.md` imports it with `@.specs/project/RULES.md`; see `${CLAUDE_PLUGIN_ROOT}/shared/templates/project-claude-md.md`).
 
 - **Write only on an explicit user statement** ("never create tracking", "always use the same OrderTemplateId"). Never infer a rule. Record ID `R-xx`, rule, why, how to apply, origin (quote + date). Model: a table with the columns ID, Rule, Why, How to apply, Origin.
-- **Owner:** the main agent. When an orchestrator such as Claude Maestro runs the project, only the orchestrator writes it and subagents cannot (hook-enforced); they suggest rules in `NOTES`.
+- **Owner:** the main agent. When an orchestrator such as Rolo Loop runs the project, only the orchestrator writes it and subagents cannot (hook-enforced); they suggest rules in `NOTES`.
 - **Precedence:** RULES.md beats spec, design, tasks and skills. On conflict stop and ask.
 - **Feature level:** `spec.md` carries `Applicable rules: R-xx` (IDs only) and, when needed, `Feature limits: LIM-xx`.
 - **Size:** up to ~40 rules / ~600 words. A decision that expires goes to STATE.md, not here.
