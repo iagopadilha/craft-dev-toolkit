@@ -6,8 +6,8 @@
 
 ## Tasks format (orchestrated run)
 
-When an orchestrator such as Claude Maestro runs the project, `tasks.md` uses THIS format (it wins over the template further down; without an orchestrator, use the template further down).
-The orchestrator's engine reads it: with Claude Maestro, `harness tasks waves <slug>` turns it into waves of parallel executors.
+When an orchestrator such as Rolo Loop runs the project, `tasks.md` uses THIS format (it wins over the template further down; without an orchestrator, use the template further down).
+The orchestrator's engine reads it: with Rolo Loop, `harness tasks waves <slug>` turns it into waves of parallel executors.
 
 ```markdown
 ### T1: <one deliverable> [P]
@@ -26,7 +26,7 @@ The orchestrator's engine reads it: with Claude Maestro, `harness tasks waves <s
 - **Done when** is observable behaviour (a command, a response, a screen). No "tests pass" line.
 - **No tests in a project without tests**: if the project has no test suite, no task adds one.
 - **Status** (`pending|running|done|failed`) is written by the orchestrator; the spec-writer leaves `pending`.
-- Check the plan before approving (with Claude Maestro: `harness tasks waves <slug>`): a cycle, an unknown dependency or a missing file is a problem, and there are no waves.
+- Check the plan before approving (with Rolo Loop: `harness tasks waves <slug>`): a cycle, an unknown dependency or a missing file is a problem, and there are no waves.
 
 ---
 

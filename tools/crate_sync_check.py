@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Reports differences between the crates this repository shares with claude-maestro (`egress-policy`, `pycompat`).
+"""Reports differences between the crates this repository shares with Rolo Loop (the local clone of iagopadilha/rolo-loop) (`egress-policy`, `pycompat`).
 
 Each repository carries its own copy; this script compares the files of the two copies byte by byte (line endings aside) so a change made in one
 is not forgotten in the other.
 
-Usage: python tools/crate_sync_check.py [--maestro ../claude-maestro]
+Usage: python tools/crate_sync_check.py [--rolo-loop ../claude-maestro]  (the local folder of the rolo-loop clone)
 Exit 0 when the copies are identical, 1 when they differ, 2 when the other repository is not there.
 """
 import os
@@ -27,9 +27,9 @@ def files_of(root):
 
 
 def main():
-    other = os.path.abspath(sys.argv[sys.argv.index("--maestro") + 1]) if "--maestro" in sys.argv else os.path.join(os.path.dirname(REPO), "claude-maestro")
+    other = os.path.abspath(sys.argv[sys.argv.index("--rolo-loop") + 1]) if "--rolo-loop" in sys.argv else os.path.join(os.path.dirname(REPO), "claude-maestro")
     if not os.path.isdir(os.path.join(other, "crates")):
-        print("claude-maestro not found at", other)
+        print("Rolo Loop clone not found at", other)
         return 2
     different = 0
     for crate in SHARED:
@@ -37,7 +37,7 @@ def main():
         for name in sorted(set(ours) | set(theirs)):
             if ours.get(name) != theirs.get(name):
                 different += 1
-                state = "only here" if name not in theirs else ("only in claude-maestro" if name not in ours else "differs")
+                state = "only here" if name not in theirs else ("only in rolo-loop" if name not in ours else "differs")
                 print("%s/%s: %s" % (crate, name, state))
     print("shared crates identical" if not different else "%d file(s) differ" % different)
     return 1 if different else 0

@@ -2,7 +2,7 @@
 
 **Trigger:** "Initialize project", "Setup project", "Start new project"
 
-> **Projects run by an orchestrator such as Claude Maestro:** do not use the long format below. `PROJECT.md` is born from the orchestrator's template as a SHORT context file for the loop's subagents (~300 words): one `**Vision:**` line (1-2 sentences, what is being built and for whom; the only `FILL_IN`) and a static `## Where to look` section pointing to `docs/codebase/` (stack, architecture, conventions, structure, tests, integrations, concerns), `RULES.md` (limits and "never X"), `STATE.md`, `ROADMAP.md`, `FLOWS.md` and `TEST-ENVIRONMENT.md`. Stack, goals, scope and constraints are not kept there; do not ask the user for them. The long format below stays valid for standalone greenfield use.
+> **Projects run by an orchestrator such as Rolo Loop:** do not use the long format below. `PROJECT.md` is born from the orchestrator's template as a SHORT context file for the loop's subagents (~300 words): one `**Vision:**` line (1-2 sentences, what is being built and for whom; the only `FILL_IN`) and a static `## Where to look` section pointing to `docs/codebase/` (stack, architecture, conventions, structure, tests, integrations, concerns), `RULES.md` (limits and "never X"), `STATE.md`, `ROADMAP.md`, `FLOWS.md` and `TEST-ENVIRONMENT.md`. Stack, goals, scope and constraints are not kept there; do not ask the user for them. The long format below stays valid for standalone greenfield use.
 
 ## Process
 
