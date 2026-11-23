@@ -193,7 +193,7 @@ Then the PR:
 ```bash
 git fetch --prune
 git log origin/<default>..origin/<integration> --oneline     # nothing: say "nothing to release" and stop
-gh pr view --head <integration> --base <default> 2>/dev/null  # an open PR is reused (the push already updated it)
+gh pr list --head <integration> --base <default> --state open --json number,url   # a hit is reused (the push already updated it)
 gh pr create --base <default> --head <integration> --title "release: <summary>" --body "<commit list>"
 ```
 
