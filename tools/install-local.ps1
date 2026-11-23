@@ -20,3 +20,4 @@ foreach ($dir in $targets) {
     Copy-Item $exe $dir -Force
     Write-Host "craft.exe -> $dir"
 }
+# shortcut test comment
