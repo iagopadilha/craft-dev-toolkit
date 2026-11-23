@@ -1,6 +1,6 @@
 ---
 name: dev-pr-main
-description: Open the pull request from the integration branch to the default branch. Never touches the integration branch itself.
+description: Push the work on the integration branch straight to it (no new branch), then open the integration to default pull request. Reuses an open PR.
 disable-model-invocation: true
 ---
 
