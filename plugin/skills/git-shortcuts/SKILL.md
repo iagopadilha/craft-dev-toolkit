@@ -40,11 +40,15 @@ gh auth status
 ```
 
 - The repository is the current folder's. Never ask for it.
-- **Local protected branches are always brought up to date first**, so they match the remote before anything is
-  branched, compared or merged: `<base>`, and `<default>` and `<integration>` when they exist. Do it without leaving the
-  current branch: `git fetch origin <branch>:<branch>` (fast-forward only) for a branch that is not checked out, and
-  `git pull --ff-only` for the one that is, when its tree is clean. A branch that cannot fast-forward is reported, never
-  reset.
+- **Local protected branches are updated at two moments only.**
+  1. **Before a branch is created or compared** (`branch`, `branch-pr`, `branch-merge`, `hotfix`, `release-pr`,
+     `release-merge`, `sync`): fast-forward the local base so the new branch starts from the remote state.
+     `pr` and `clean` do not pull.
+  2. **After a merge** (`branch-merge`, `release-merge`): pull what the merge changed, as written in those modes.
+
+  Update without leaving the current branch: `git fetch origin <branch>:<branch>` (fast-forward only) for a branch that
+  is not checked out, `git pull --ff-only` for the one that is, when its tree is clean. A branch that cannot
+  fast-forward is reported, never reset.
 - If the active `gh` account is not the owner of `origin`, say so before any push or PR.
 - The base comes from the `github` skill section 0 and the `git` slot. No slot and no integration branch: the base is the
   default branch.
