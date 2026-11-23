@@ -7,7 +7,7 @@ All notable changes are listed here, newest first. The format follows Keep a Cha
 
 ### Added
 
-- Git shortcut commands on top of the `github` skill: `/branch-from-dev`, `/branch-from-dev-pr`, `/branch-from-dev-merge`, `/dev-pr-main`, `/dev-merge-main`, `/pr`, `/sync-dev`, `/clean-branches`, `/hotfix`. They read the work from the git state, name the branch themselves and need no arguments. Engine in the `git-shortcuts` skill.
+- Git shortcut commands on top of the `github` skill: `/branch-from-dev`, `/branch-from-dev-pr`, `/branch-from-dev-merge`, `/dev-pr-main`, `/dev-merge-main`, `/pr`, `/pull`, `/sync-dev`, `/clean-branches`, `/hotfix`. They read the work from the git state, name the branch themselves and need no arguments. Engine in the `git-shortcuts` skill.
 - `/spec-full` (spec, design and tasks in one go, name derived, no test tasks) and `/spec-run` (run the pending tasks up to a named point) over `tlc-spec-driven`.
 - `/quality-gate` (standards, bug hunt and spec adherence over finished code, in a subagent by default, read-only) and `/review-pr` (a PR review that includes the gate).
 

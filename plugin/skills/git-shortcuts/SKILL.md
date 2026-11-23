@@ -2,7 +2,7 @@
 name: git-shortcuts
 description: >
   Shared engine behind the git shortcut commands /branch-from-dev, /branch-from-dev-pr, /branch-from-dev-merge,
-  /dev-pr-main, /dev-merge-main, /pr, /sync-dev, /clean-branches and /hotfix. It is loaded by those commands.
+  /dev-pr-main, /dev-merge-main, /pr, /pull, /sync-dev, /clean-branches and /hotfix. It is loaded by those commands.
   Do not activate it on your own for ordinary git requests: the `github` skill covers those.
 ---
 
@@ -40,6 +40,15 @@ gh auth status
 ```
 
 - The repository is the current folder's. Never ask for it.
+- **Local protected branches are updated at two moments, plus the `pull` command.**
+  1. **Before a branch is created or compared** (`branch`, `branch-pr`, `branch-merge`, `hotfix`, `release-pr`,
+     `release-merge`, `sync`): fast-forward the local base so the new branch starts from the remote state.
+     `pr` and `clean` do not pull.
+  2. **After a merge** (`branch-merge`, `release-merge`): pull what the merge changed, as written in those modes.
+
+  Update without leaving the current branch: `git fetch origin <branch>:<branch>` (fast-forward only) for a branch that
+  is not checked out, `git pull --ff-only` for the one that is, when its tree is clean. A branch that cannot
+  fast-forward is reported, never reset.
 - If the active `gh` account is not the owner of `origin`, say so before any push or PR.
 - The base comes from the `github` skill section 0 and the `git` slot. No slot and no integration branch: the base is the
   default branch.
@@ -160,6 +169,8 @@ git push origin --delete <branch>      # remote; skip when GitHub already remove
 - Not mergeable (required review missing, a failing check, a conflict, branch protection): **stop and report** the
   reason and the PR URL. If a review is the only thing missing, say who has to approve.
 - Never delete a protected branch. The head branch of this mode is a feature branch, so the delete is allowed.
+- After the merge, local `<base>` is pulled (`git pull --ff-only`) so it holds the merge commit, and `<default>` is
+  updated too when it differs from `<base>`.
 - After the cleanup the repository is on `<base>`, up to date, and the feature branch is gone locally and remotely.
 
 ### `release-pr` (/dev-pr-main)
@@ -178,12 +189,38 @@ The title summarizes the commits; the body lists them. Report the URL.
 ### `release-merge` (/dev-merge-main)
 
 `release-pr`, then checks and `gh pr merge <number> --merge` with the same stop rules as `branch-merge`.
-**Never delete `<integration>`** and never pass `--delete-branch`. Afterwards `git checkout <integration> && git pull --ff-only`.
+**Never delete `<integration>`** and never pass `--delete-branch`. Afterwards update **both** local branches: `git checkout <default> && git pull --ff-only`, then
+`git checkout <integration> && git pull --ff-only`, and finish on `<integration>`.
 
 ### `pr` (/pr)
 
 Open the PR of the **current** branch to `<base>`, by the `github` skill section 7: push if needed, check for an open PR,
 create it with the title and body rules above. On a protected branch: stop, there is no PR to open from it.
+
+### `pull` (/pull)
+
+Pull from the remote. Commits nothing. Always starts with `git fetch --prune`.
+
+**No argument** (`/pull`): update the repository and the current branch.
+
+1. Update every local protected branch that exists (`<base>`, `<default>`, `<integration>`) without leaving the current
+   one: `git fetch origin <branch>:<branch>`, fast-forward only.
+2. Update the **current branch**: with an upstream, `git pull --ff-only`. A dirty tree: `git stash -u`, pull,
+   `git stash pop`. No upstream: say so and skip it.
+3. A branch that cannot fast-forward (it diverged): report it and stop for that branch. Never reset, rebase or merge
+   here. A feature branch that is behind its base is the job of `/sync-dev`.
+
+**With a branch** (`/pull developer`, `/pull main`, `/pull feat/x`): the user wants the current repository updated from
+that branch.
+
+1. Update the local copy of that branch from `origin` (fast-forward only, without leaving the current branch). A name that
+   exists nowhere: say so and stop.
+2. If the current branch **is** that branch, that is all.
+3. If the current branch is a different feature branch, bring that branch into it with the `sync` rules (rebase when the
+   current branch is not shared, merge when it is pushed, stash around a dirty tree, stop on a conflict, never force-push).
+4. If the current branch is another protected branch, stop and say so: protected branches are not merged into each other here.
+
+Report one line per branch that moved (`developer +3`, `feat/x +1`) and the ones already up to date.
 
 ### `sync` (/sync-dev)
 

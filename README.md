@@ -29,7 +29,7 @@ Type `/` and pick one. Each takes no arguments: the repository is the current fo
 | `/branch-from-dev-pr` | The same, then opens the pull request |
 | `/branch-from-dev-merge` | Reuses the open PR or creates one, merges it (merge commit) and deletes the feature branch |
 | `/dev-pr-main`, `/dev-merge-main` | Integration branch to default branch, as a PR or merged. The integration branch is never deleted |
-| `/pr`, `/sync-dev`, `/clean-branches`, `/hotfix` | Open the PR of the current branch, bring the base in, delete merged local branches, urgent fix from the default branch |
+| `/pr`, `/pull`, `/sync-dev`, `/clean-branches`, `/hotfix` | Open the PR of the current branch, pull the repo and current branch (or `/pull <branch>`), bring the base in, delete merged local branches, urgent fix from the default branch |
 | `/spec-full`, `/spec-run` | A complete `spec.md`, `design.md` and `tasks.md` from one description; then run the tasks up to the point you name |
 | `/quality-gate`, `/review-pr` | Judge finished code against `backend-dev` and `frontend-dev`, hunt bugs, check the spec; the PR review includes the gate |
 
