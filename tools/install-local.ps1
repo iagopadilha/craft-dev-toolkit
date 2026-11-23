@@ -21,3 +21,4 @@ foreach ($dir in $targets) {
     Write-Host "craft.exe -> $dir"
 }
 # dev-to-main smoke test
+# second edit
