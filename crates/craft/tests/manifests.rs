@@ -38,7 +38,7 @@ fn every_skill_folder_has_a_skill_file_with_a_matching_name() {
         assert!(text.lines().any(|l| l.trim() == format!("name: {name}")), "{name}: the frontmatter name must equal the folder");
         count += 1;
     }
-    assert_eq!(count, 8);
+    assert_eq!(count, 22);
 }
 
 #[test]
