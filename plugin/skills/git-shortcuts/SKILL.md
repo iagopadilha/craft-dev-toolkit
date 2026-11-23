@@ -177,20 +177,35 @@ git push origin --delete <branch>      # remote; skip when GitHub already remove
 
 Needs an integration branch. Without one the work already targets `<default>`: say so and stop.
 
+**Step 0, push what you have, with no new branch.** Typing this command on `<integration>` is the explicit request to
+commit and push to it directly (the `github` skill allows it on the integration branch). Read the work as in section 2:
+
+- On `<integration>` with uncommitted changes or local commits ahead of `origin/<integration>`: update it
+  (`git stash -u`, `git pull --ff-only`, `git stash pop`), commit as in section 4 (type and message from the diff, no
+  branch created), then `git push origin <integration>`. Never force. A pull that cannot fast-forward, or a conflict: stop.
+- On `<integration>` with nothing to push: go straight to the PR.
+- On any other branch: do not carry its work. Use the remote state of `<integration>` for the PR and say that the current
+  branch was left out. To ship a feature branch, the user runs `/branch-from-dev-pr`.
+- On `<default>`: stop. Direct work on the default branch is never done.
+
+Then the PR:
+
 ```bash
 git fetch --prune
 git log origin/<default>..origin/<integration> --oneline     # nothing: say "nothing to release" and stop
-gh pr view --head <integration> --base <default> 2>/dev/null  # an open PR is reused
+gh pr view --head <integration> --base <default> 2>/dev/null  # an open PR is reused (the push already updated it)
 gh pr create --base <default> --head <integration> --title "release: <summary>" --body "<commit list>"
 ```
 
-The title summarizes the commits; the body lists them. Report the URL.
+The title summarizes the commits; the body lists them. Report what was pushed (hash and file count) and the PR URL.
+The urgent case, a fix that has to reach `<default>` fast, is exactly this: edit on `<integration>`, type the command.
 
 ### `release-merge` (/dev-merge-main)
 
-`release-pr`, then checks and `gh pr merge <number> --merge` with the same stop rules as `branch-merge`.
-**Never delete `<integration>`** and never pass `--delete-branch`. Afterwards update **both** local branches: `git checkout <default> && git pull --ff-only`, then
-`git checkout <integration> && git pull --ff-only`, and finish on `<integration>`.
+`release-pr` (including step 0), then checks and `gh pr merge <number> --merge` with the same stop rules as `branch-merge`.
+**Never delete `<integration>`** and never pass `--delete-branch`. Afterwards update **both** local branches:
+`git checkout <default> && git pull --ff-only`, then `git checkout <integration> && git pull --ff-only`, and finish on
+`<integration>`.
 
 ### `pr` (/pr)
 

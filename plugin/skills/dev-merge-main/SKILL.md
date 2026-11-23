@@ -1,6 +1,6 @@
 ---
 name: dev-merge-main
-description: Open the integration to default pull request (or reuse it) and merge it with a merge commit. The integration branch is never deleted.
+description: Same as /dev-pr-main, then merge the PR with a merge commit. The integration branch is never deleted.
 disable-model-invocation: true
 ---
 
