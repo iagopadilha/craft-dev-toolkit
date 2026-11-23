@@ -2,7 +2,7 @@
 name: git-shortcuts
 description: >
   Shared engine behind the git shortcut commands /branch-from-dev, /branch-from-dev-pr, /branch-from-dev-merge,
-  /dev-pr-main, /dev-merge-main, /pr, /sync-dev, /clean-branches and /hotfix. It is loaded by those commands.
+  /dev-pr-main, /dev-merge-main, /pr, /pull, /sync-dev, /clean-branches and /hotfix. It is loaded by those commands.
   Do not activate it on your own for ordinary git requests: the `github` skill covers those.
 ---
 
@@ -40,7 +40,7 @@ gh auth status
 ```
 
 - The repository is the current folder's. Never ask for it.
-- **Local protected branches are updated at two moments only.**
+- **Local protected branches are updated at two moments, plus the `pull` command.**
   1. **Before a branch is created or compared** (`branch`, `branch-pr`, `branch-merge`, `hotfix`, `release-pr`,
      `release-merge`, `sync`): fast-forward the local base so the new branch starts from the remote state.
      `pr` and `clean` do not pull.
@@ -196,6 +196,22 @@ The title summarizes the commits; the body lists them. Report the URL.
 
 Open the PR of the **current** branch to `<base>`, by the `github` skill section 7: push if needed, check for an open PR,
 create it with the title and body rules above. On a protected branch: stop, there is no PR to open from it.
+
+### `pull` (/pull)
+
+Bring the repository and the current branch up to date with the remote. Reads nothing else, commits nothing.
+
+```bash
+git fetch --prune
+```
+
+1. Update every local protected branch that exists (`<base>`, `<default>`, `<integration>`) without leaving the current
+   one: `git fetch origin <branch>:<branch>`, fast-forward only.
+2. Update the **current branch**: with an upstream, `git pull --ff-only`. A dirty tree: `git stash -u`, pull,
+   `git stash pop`. No upstream: say so and skip it.
+3. A branch that cannot fast-forward (it diverged): report it and stop for that branch. Never reset, rebase or merge
+   here. A feature branch that is behind its base is the job of `/sync-dev`.
+4. Report one line per branch that moved (`developer +3`, `feat/x +1`) and the branches already up to date.
 
 ### `sync` (/sync-dev)
 
