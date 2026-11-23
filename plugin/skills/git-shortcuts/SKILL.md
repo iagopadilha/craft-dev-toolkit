@@ -40,6 +40,11 @@ gh auth status
 ```
 
 - The repository is the current folder's. Never ask for it.
+- **Local protected branches are always brought up to date first**, so they match the remote before anything is
+  branched, compared or merged: `<base>`, and `<default>` and `<integration>` when they exist. Do it without leaving the
+  current branch: `git fetch origin <branch>:<branch>` (fast-forward only) for a branch that is not checked out, and
+  `git pull --ff-only` for the one that is, when its tree is clean. A branch that cannot fast-forward is reported, never
+  reset.
 - If the active `gh` account is not the owner of `origin`, say so before any push or PR.
 - The base comes from the `github` skill section 0 and the `git` slot. No slot and no integration branch: the base is the
   default branch.
@@ -160,6 +165,8 @@ git push origin --delete <branch>      # remote; skip when GitHub already remove
 - Not mergeable (required review missing, a failing check, a conflict, branch protection): **stop and report** the
   reason and the PR URL. If a review is the only thing missing, say who has to approve.
 - Never delete a protected branch. The head branch of this mode is a feature branch, so the delete is allowed.
+- After the merge, local `<base>` is pulled (`git pull --ff-only`) so it holds the merge commit, and `<default>` is
+  updated too when it differs from `<base>`.
 - After the cleanup the repository is on `<base>`, up to date, and the feature branch is gone locally and remotely.
 
 ### `release-pr` (/dev-pr-main)
@@ -178,7 +185,8 @@ The title summarizes the commits; the body lists them. Report the URL.
 ### `release-merge` (/dev-merge-main)
 
 `release-pr`, then checks and `gh pr merge <number> --merge` with the same stop rules as `branch-merge`.
-**Never delete `<integration>`** and never pass `--delete-branch`. Afterwards `git checkout <integration> && git pull --ff-only`.
+**Never delete `<integration>`** and never pass `--delete-branch`. Afterwards update **both** local branches: `git checkout <default> && git pull --ff-only`, then
+`git checkout <integration> && git pull --ff-only`, and finish on `<integration>`.
 
 ### `pr` (/pr)
 
