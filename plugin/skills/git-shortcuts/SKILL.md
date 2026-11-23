@@ -199,11 +199,9 @@ create it with the title and body rules above. On a protected branch: stop, ther
 
 ### `pull` (/pull)
 
-Bring the repository and the current branch up to date with the remote. Reads nothing else, commits nothing.
+Pull from the remote. Commits nothing. Always starts with `git fetch --prune`.
 
-```bash
-git fetch --prune
-```
+**No argument** (`/pull`): update the repository and the current branch.
 
 1. Update every local protected branch that exists (`<base>`, `<default>`, `<integration>`) without leaving the current
    one: `git fetch origin <branch>:<branch>`, fast-forward only.
@@ -211,7 +209,18 @@ git fetch --prune
    `git stash pop`. No upstream: say so and skip it.
 3. A branch that cannot fast-forward (it diverged): report it and stop for that branch. Never reset, rebase or merge
    here. A feature branch that is behind its base is the job of `/sync-dev`.
-4. Report one line per branch that moved (`developer +3`, `feat/x +1`) and the branches already up to date.
+
+**With a branch** (`/pull developer`, `/pull main`, `/pull feat/x`): the user wants the current repository updated from
+that branch.
+
+1. Update the local copy of that branch from `origin` (fast-forward only, without leaving the current branch). A name that
+   exists nowhere: say so and stop.
+2. If the current branch **is** that branch, that is all.
+3. If the current branch is a different feature branch, bring that branch into it with the `sync` rules (rebase when the
+   current branch is not shared, merge when it is pushed, stash around a dirty tree, stop on a conflict, never force-push).
+4. If the current branch is another protected branch, stop and say so: protected branches are not merged into each other here.
+
+Report one line per branch that moved (`developer +3`, `feat/x +1`) and the ones already up to date.
 
 ### `sync` (/sync-dev)
 
